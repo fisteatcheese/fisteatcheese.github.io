@@ -1,32 +1,39 @@
-function iterate(items, items2 = [], items3 = []) {
+function fixCursor(value) {
+    if (value) {
+        document.body.style.cursor = "url('res/cursors/hand-pointer.png'), auto";
+    }
+    if (!value) {
+        document.body.style.cursor = "url('res/cursors/plus-outline.png'), auto";
+    }
+}
+
+export function iterate(items, items2 = [], items3 = []) {
     items.forEach(item => {
         item.addEventListener('mouseenter', function() {
-            fixCusor(false);
+            fixCursor(false);
         });
         item.addEventListener('mouseleave', function() {
-            fixCusor(true);
+            fixCursor(true);
         });
     });
     if (items2.length > 0) {
         items2.forEach(item => {
             item.addEventListener('mouseenter', function() {
-                fixCusor(false);
+                fixCursor(false);
             });
             item.addEventListener('mouseleave', function() {
-                fixCusor(true);
+                fixCursor(true);
             });
         }); 
     }
     if (items3.length > 0) {
         items3.forEach(item => {
             item.addEventListener('mouseenter', function() {
-                fixCusor(false);
+                fixCursor(false);
             });
             item.addEventListener('mouseleave', function() {
-                fixCusor(true);
+                fixCursor(true);
             });
         }); 
     }
 }
-
-module.exports = { iterate };
