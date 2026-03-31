@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>battery api</title>
+        <style>
+            pre {
+                position: relative; 
+            }
+
+            .copy-btn {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                width: 24px;
+                height: 24px;
+                background: url('https://cdn-icons-png.flaticon.com/128/4922/4922982.png') no-repeat center center;
+                background-size: contain;
+                border: none;
+                cursor: pointer;
+                opacity: 0.7;
+                transition: opacity 0.2s;
+                scale: 1;
+            }
+
+            .copy-btn:hover {
+                opacity: 1;
+                scale: 1.2;
+            }
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 800px;
+                margin: 50px auto;
+                padding: 20px;
+                background-color: #f5f5f5;
+            }
+            h1 {
+                color: #333;
+                border-bottom: 3px solid #007bff;
+                padding-bottom: 10px;
+            }
+            .no-underline {
+                border-bottom: 0px;
+            }
+            h2 {
+                color: #555;
+                background-color: #e9ecef;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            p {
+                color: #666;
+                line-height: 1.6;
+            }
+            #pps {
+                background-color: #f8f9fa;
+                padding: 10px;
+                border-left: 4px solid #007bff;
+                font-family: monospace;
+                overflow-x: auto;
+            }
+            #sandbox-popup {
+                position: fixed;
+                right: -300px;
+                top: 30%;
+                width: 250px;
+                padding: 20px;
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 12px 0 0 12px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                transition: right 0.5s ease;
+                z-index: 1000;
+                font-family: Arial, sans-serif;
+            }
+
+            #sandbox-popup p {
+                margin: 0 0 10px 0;
+                font-weight: bold;
+            }
+
+            #sandbox-popup .buttons {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            #sandbox-popup button {
+                padding: 5px 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+
+            #sandbox-popup button#sandbox-yes {
+                background-color: #05d4d4;
+                color: #007bff;
+            }
+
+            #sandbox-popup button#sandbox-yes:hover {
+                background-color: #01aeae;
+            }
+
+            #sandbox-popup button#sandbox-later {
+                background-color: rgba(241, 234, 234, 0.5);
+                color: #fff;
+            }
+            #sandbox-popup button#sandbox-later:hover {
+                background-color: rgb(98, 88, 88);
+            }
+            .snd {
+                color: #fff;
+            }
+        </style>
+        <link href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/themes/prism.css" rel="stylesheet" />
+
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/prism.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-core.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-clike.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-javascript.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-python.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-java.min.js"></script>
+  
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet" />
+        <link href="   https://cdn-icons-png.flaticon.com/512/8567/8567220.png" rel="icon" />
+    </head>
+
+
+
+    <body>
+            
+        <div id="sandbox-popup">
+            <p class="snd">Want to visit the sandbox?</p>
+            <div class="buttons">
+                <button id="sandbox-yes">Sure!</button>
+                <button id="sandbox-later">Maybe Later</button>
+            </div>
+        </div>
+        <h1>Documentation</h1>
+        <h1 class="no-underline">Ryan's Battery API</h1>
+        <h2>Let's learn how to use this addon!</h2>
+        <p>First, let's add this in your <code class="language-markup">&lt;head&gt;&lt;/head&gt;</code> tag</p>
+        <pre><code class="language-javascript">&lt;script src=&quot;battery-level.js&quot;&gt;&lt;/script&gt;</code></pre>
+        
+        <p>Now in your body, with your main elements, add a <code class="language-markup">&lt;script&gt;&lt;/script&gt;</code> tag</p>
+        
+        <p>Inside here, we will add a battery listener</p>
+        <pre><code class="language-javascript">const myListener = new batteryListener();</code></pre>
+        <p>You can now access all variables of the live listener, like level, charging, and the float form of the level.</p>
+        <pre><code class="language-javascript">let currentCharge = myListener.level;
+let currentChargeFloat = myListener.levelfloat;
+let isCharging = myListener.charging;</code></pre>
+        <p>Want to preview your listener variables?</p>
+        <pre><code class="language-javascript">
+// log the variables
+console.log(currentCharge)
+console.log(currentChargeFloat)
+console.log(isCharging)
+// example output:
+// 58
+// 0.58
+// true
+        </code></pre>
+
+        <h1>How to add event listeners for live updates</h1>
+        <pre><code class="language-javascript">const myListener = new batteryListener() // create a listener
+myListener.addEventListener("levelupdate", funtion() {
+    // event listeners for level update (58 - 59) OR (58 - 57)
+    console.log(`BATTERY STATUS: %${myListener.level}`)
+})
+
+myListener.addEventListener("chargeupdate", funtion() {
+    // event listeners for charge updates (true - false) OR (false - true)
+    console.log(`CHARGING STATUS: %${myListener.charging}`)
+})
+        </code></pre>
+        <script src="https://ryanthedev99.github.io/projects/battery-api/api.script.js"></script>
+    <script>
+    function oneDay(date) {
+        const lastClick = new Date(date);
+        const now = Date.now();
+        const diffTime = now - lastClick.getTime();
+
+        return diffTime >= (1000 * 60 * 60 * 24);
+    }
+
+    const shouldShow = localStorage.getItem("clicked-sandbox-preference");
+    let resolved = false;
+
+    function showSandboxPopup() {
+        if (shouldShow && !oneDay(parseInt(shouldShow))) return;
+        const popup = document.getElementById('sandbox-popup');
+        popup.style.right = '0'; 
+        localStorage.setItem("clicked-sandbox-preference", Date.now());
+    }
+
+    const popupTimeout = setTimeout(showSandboxPopup, 3000);
+
+    document.getElementById('sandbox-yes').addEventListener('click', () => {
+        window.location.href = 'about:blank';
+    });
+
+    document.getElementById('sandbox-later').addEventListener('click', () => {
+        const popup = document.getElementById('sandbox-popup');
+        popup.style.right = '-300px';
+        resolved = true
+        clearTimeout(popupTimeout); 
+    });
+    setTimeout(() => {
+        if (!resolved) {
+            console.log("OK")
+            const popup = document.getElementById('sandbox-popup');
+            popup.style.right = '-300px';
+            clearTimeout(popupTimeout)
+        }
+    }, 15000);
+    document.querySelectorAll('pre code').forEach(codeBlock => {
+        const pre = codeBlock.parentNode;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        pre.appendChild(btn);
+
+        btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+                btn.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/128/9249/9249233.png')";
+                setTimeout(() => {
+                    btn.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/128/4922/4922982.png')";
+                }, 1000);
+            });
+        });
+    });
+    </script>
+    </body>
+</html>
